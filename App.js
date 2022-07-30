@@ -1,14 +1,16 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack'
-import SearchScreen from "./src/screens/SearchScreen";
+import MainScreen from "./src/screens/mainScreen";
+import WorkOutScreen from "./src/screens/WorkOutScreen";
 
 const navigator = createStackNavigator({
-    Search: SearchScreen
+    Main: MainScreen,
+    Work: WorkOutScreen
 },{
-    initialRouteName: 'Search',
+    initialRouteName: 'Main',
     defaultNavigationOptions: {
-        title: "Business Search"
-    }
+        title: "Workout Routine",
+    },
 });
 
 export default createAppContainer(navigator);

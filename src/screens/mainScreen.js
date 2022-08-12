@@ -33,9 +33,6 @@ const MainScreen = ({navigation}) => {
         stringDay = "Saturday"
     }
 
-    const [term, setTerm] = useState('');
-
-
 
     return (
         <View>

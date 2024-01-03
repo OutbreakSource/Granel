@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from "react-native";
 import CurrentBodyGroup from "../components/CurrentBodyGroups";
-import CurrentBodyGroupData from "../components/CurrentBodyGroupData";
-
 
 
 const MainScreen = ({navigation}) => {

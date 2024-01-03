@@ -1,7 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import CurrentBodyGroupData from "./CurrentBodyGroupData";
-import {NavigationActions as navigation} from "react-navigation";
 
 
 const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
@@ -29,7 +27,7 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
         "Back"
     ],["Rest",
         "Chest",
-        "Bicep/Triceps",
+        "Biceps/Triceps",
         "Legs",
         "Back",
         "Shoulders",
@@ -39,7 +37,7 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
         "Chest/Biceps/Abs",
         "Legs/Shoulder",
         "Back/Triceps",
-        "Shoulders/Chest/Bicep",
+        "Shoulders/Chest/Biceps",
         "Rest"
     ]]
 

@@ -35,7 +35,7 @@ const MainScreen = ({navigation}) => {
         stringDay = "Saturday"
     }
 
-    const [selectedItems, setSelectedItems] = useState(["Barbell", "Body Only", "Cable", "Dumbbell", "Kettleballs", "Machine"]);
+    const [selectedItems, setSelectedItems] = useState(["Barbell", "Body Only", "Cable", "Dumbbell", "Kettlebells", "Machine"]);
 
     const items = [
         {

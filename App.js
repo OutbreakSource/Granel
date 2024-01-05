@@ -9,7 +9,7 @@ const navigator = createStackNavigator({
 },{
     initialRouteName: 'Main',
     defaultNavigationOptions: {
-        title: "Workout Routine"
+        title: "GRANEL"
     },
 });
 

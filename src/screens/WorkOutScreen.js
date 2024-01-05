@@ -16,7 +16,7 @@ const WorkOutScreen = ({ navigation }) => {
             </View>)
     }
 
-    const [refreshKey, setRefreshKey] = useState(0);
+    const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
 
     const fetchImages = async () => {
@@ -28,8 +28,7 @@ const WorkOutScreen = ({ navigation }) => {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
 
-                    const imageUrl = response.url;
-                    return imageUrl;
+                    return response.url;
                 })
             );
 
@@ -56,6 +55,7 @@ const WorkOutScreen = ({ navigation }) => {
         ));
     };
 
+    console.log(navigation.getParam('equipment'))
     const pullMe = async () => {
         await fetchImages();
     };
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     viewBlock: {
-        backgroundColor: '#FF4A4A',
+        backgroundColor: '#568ee1',
         borderRadius: 5,
         marginVertical: 15,
         padding: 10,

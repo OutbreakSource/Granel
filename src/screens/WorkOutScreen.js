@@ -1,64 +1,80 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, RefreshControl, Image} from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, Image } from "react-native";
 
-
-
-const WorkOutScreen = ({navigation}) => {
-
-    let groups = navigation.getParam('groups').split("/")
-    if(groups[0].toLowerCase() === 'rest'){
+const WorkOutScreen = ({ navigation }) => {
+    let groups = navigation.getParam('groups').split("/");
+    if (groups[0].toLowerCase() === 'rest') {
         return (
             <View>
-                <Text style={styles.textStyle}>lol</Text>
+                <Text style={styles.textStyle}>Rest Up!</Text>
+            </View>)
+    }
+    if (groups[0].toLowerCase() === 'Your Choice') {
+        return (
+            <View>
+                <Text style={styles.textStyle}>Whatever you feel like!</Text>
             </View>)
     }
 
-    const createViews = () => {
-        const views = [];
-        for (let i = 0; i < groups.length; i++) {
-            views.push(
-                <View style={styles.viewBlock} key={i}>
-                    <View>
-                        <Text style={styles.textStyle}>{groups[i]}</Text>
-                    </View>
-                    <View style={styles.imageContainer}>
-
-                        {/*<ImageDetail source={mapGroup.get(groups[i].toLowerCase())[getRandomIntInclusive(1, 2)]} style={{ width: 600, height: 500 }} />*/}
-
-                        <Image
-                            key={1}
-                            source={{ uri: `http://192.168.0.56:8888/randomImage?category=Barbell&muscle=${groups[i]}` }}
-                            style={{ width: 200, height: 200 }}
-                        />
-
-                    </View>
-                </View>
-            );
-        }
-        return views;
-    }
-
-    const [refresh, setRefresh] = useState(false)
     const [refreshKey, setRefreshKey] = useState(0);
+    const [imageUrls, setImageUrls] = useState([]);
 
+    const fetchImages = async () => {
+        try {
+            const newImageUrls = await Promise.all(
+                groups.map(async (group) => {
+                    const response = await fetch(`http://192.168.0.56:8888/randomImage?category=Barbell&muscle=${group}&timestamp=${Date.now()}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
 
-    const pullMe = () => {
-        setRefresh(true)
-        setTimeout(() => {
-            setRefresh(false)
-        }, 50)
+                    const imageUrl = response.url;
+                    return imageUrl;
+                })
+            );
 
-    }
+            setImageUrls(newImageUrls);
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+    };
+
+    const createViews = () => {
+        return groups.map((group, index) => (
+            <View style={styles.viewBlock} key={index}>
+                <View>
+                    <Text style={styles.textStyle}>{group}</Text>
+                </View>
+                <View style={styles.imageContainer}>
+                    <Image
+                        key={index}
+                        source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
+                        style={{ width: 200, height: 200 }}
+                    />
+                </View>
+            </View>
+        ));
+    };
+
+    const pullMe = async () => {
+        await fetchImages();
+    };
+
+    useEffect(() => {
+        fetchImages();
+    }, []);
 
     return (
         <ScrollView
+            key={refreshKey}
             refreshControl={
                 <RefreshControl
-                    refreshing={refresh}
-                    onRefresh={() => pullMe()}
-                />}>
+                    refreshing={false}
+                    onRefresh={pullMe}
+                />
+            }>
             <View>
-                <View>{createViews()}</View>
+                {createViews()}
             </View>
         </ScrollView>
     );
@@ -69,13 +85,13 @@ const styles = StyleSheet.create({
         fontSize: 50,
         textDecorationStyle: "solid",
         alignSelf: "center",
-        marginVertical: 10
+        marginVertical: 10,
     },
     viewBlock: {
         backgroundColor: '#FF4A4A',
         borderRadius: 5,
         marginVertical: 15,
-        padding: 10
+        padding: 10,
     },
     imageContainer: {
         alignSelf: 'center',
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 });
 

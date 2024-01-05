@@ -5,52 +5,53 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
 
     let routines = [["Rest",
-        "Upper Body/Cardio",
-        "Total Body/Abs",
-        "Lower Body/Cardio",
-        "Total Body/Abs",
-        "Total Body",
+        "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms",
+        "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
+        "Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
+        "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
+        "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
         "Your Choice"
     ],["Rest",
-        "Quads/Glutes/Core",
+        "Quadriceps/Glutes/Abdominals",
         "Lats/Chest",
-        "Calves/Hams/Core",
-        "Low back/Mid back/Triceps",
-        "Shoulders/Traps/Neck",
-        "Chest/Biceps/Core"
-    ],["Legs",
+        "Calves/Glutes/Hamstrings/Quadriceps/Core",
+        "Lower back/Middle back/Triceps",
+        "Shoulders",
+        "Chest/Biceps/Abdominals"
+    ],["Calves/Glutes/Hamstrings/Quadriceps",
         "Chest",
         "Biceps",
         "Legs",
         "Triceps",
         "Shoulders",
-        "Back"
+        "Lower back/Middle back"
     ],["Rest",
         "Chest",
         "Biceps/Triceps",
         "Legs",
-        "Back",
+        "Lower back/Middle back",
         "Shoulders",
         "Rest"
     ],["Rest",
         "Back/Triceps",
-        "Chest/Biceps/Abs",
-        "Legs/Shoulder",
-        "Back/Triceps",
+        "Chest/Biceps/Abdominals",
+        "Calves/Glutes/Hamstrings/Quadriceps/Shoulder",
+        "Lower back/Middle back/Lats/Triceps",
         "Shoulders/Chest/Biceps",
         "Rest"
     ]]
 
 
     return (
-        <View>
-            <Text style={styles.planText}>Plan #{id + 1}:</Text>
 
-            <TouchableOpacity style={theme} onPress={() =>
-                navigation.navigate("Work", {groups: routines[id][currentDay]})}>
-                <Text style={styles.textStyle}>{routines[id][currentDay]}</Text>
-            </TouchableOpacity>
-        </View>
+            <View>
+                <Text style={styles.planText}>Plan #{id + 1}:</Text>
+                <TouchableOpacity style={theme} onPress={() =>
+                    navigation.navigate("Work", {groups: routines[id][currentDay]})}>
+                    <Text style={styles.textStyle}>{routines[id][currentDay]}</Text>
+                </TouchableOpacity>
+            </View>
+
 
 
     );

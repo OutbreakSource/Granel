@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 
-const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
+
+const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
 
     let routines = [["Rest",
         "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms",
@@ -47,7 +48,7 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay}) => {
             <View>
                 <Text style={styles.planText}>Plan #{id + 1}:</Text>
                 <TouchableOpacity style={theme} onPress={() =>
-                    navigation.navigate("Work", {groups: routines[id][currentDay]})}>
+                    navigation.navigate("Work", {groups: routines[id][currentDay], equipment: equipment})}>
                     <Text style={styles.textStyle}>{routines[id][currentDay]}</Text>
                 </TouchableOpacity>
             </View>

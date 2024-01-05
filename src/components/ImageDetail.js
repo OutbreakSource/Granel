@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native'
+import {View, StyleSheet, Image, Dimensions} from 'react-native'
 
 
 const ImageDetail = (props) => {
@@ -17,8 +17,8 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
-        width: windowWidth, // 60% of the screen width
-        height: windowHeight * .50, // 5% of the screen height
+        width: windowWidth * .80,
+        height: windowHeight * .80,
         justifyContent: 'center',
         alignSelf: 'center',
     },

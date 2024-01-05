@@ -34,7 +34,7 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
         "Shoulders",
         "Rest"
     ],["Rest",
-        "Back/Triceps",
+        "Lower back/Middle back/Triceps",
         "Chest/Biceps/Abdominals",
         "Calves/Glutes/Hamstrings/Quadriceps/Shoulder",
         "Lower back/Middle back/Lats/Triceps",

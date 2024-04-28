@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl, Image } from "react
 
 const WorkOutScreen = ({ navigation }) => {
     let groups = navigation.getParam('groups').split("/");
-    let equipmentlist = navigation.getParam('equipment');
+    let equipment = navigation.getParam('equipment');
     const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
 
@@ -28,22 +28,16 @@ const WorkOutScreen = ({ navigation }) => {
     const fetchImages = async () => {
         try {
 
-            let equipment = "";
             const newImageUrls = [];
             for (const group of groups) {
-                console.log(group)
-                let response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipmentlist[Math.floor(Math.random() * equipmentlist.length)]}&muscle=${group}&timestamp=${Date.now()}`);
-
-                let failureCount = 0;
-                console.log(equipmentlist.length)
+                let response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
                 if (response.status === 500){
-                    for(let i = 0; i < equipmentlist.length; i++){
-                        response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipmentlist[i]}&muscle=${group}&timestamp=${Date.now()}`);
+                    for(let i = 0; i < equipment.length; i++){
+                        response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[i]}&muscle=${group}&timestamp=${Date.now()}`);
                         if (response.status === 200){
                             break;
                         }
                     }
-                    console.log("oopsiedaisy")
                 }
 
 
@@ -67,7 +61,6 @@ const WorkOutScreen = ({ navigation }) => {
                 <View style={styles.imageContainer}>
                     <Image
                         key={index}
-                        //ource={{ uri: `${imageUrls[index]}&timestamp=${Date.now() === null ? '' : Date.now()}` }}
                         source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
                         style={{ width: '98%', height: '100%' }}
                     />

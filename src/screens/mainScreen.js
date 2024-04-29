@@ -81,7 +81,7 @@ const MainScreen = ({navigation}) => {
                         },
                         item: {
                             borderBottomWidth: 1,
-                            borderBottomColor: '#ccc',
+                            borderBottomColor: '#80bcff',
                             padding: 8
                         },
                         subItem: {
@@ -100,7 +100,7 @@ const MainScreen = ({navigation}) => {
                         },
                         separator: {
                             height: 1,
-                            backgroundColor: '#ccc',
+                            backgroundColor: '#00e4ff',
                         },
                         selectToggle: {
                             padding: 8,
@@ -148,7 +148,7 @@ const MainScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
     backgroundStyle: {
-        backgroundColor: '#bebebe',
+        backgroundColor: '#84afff',
         height: 100,
         borderRadius: 5,
         marginHorizontal: 15,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center"
     }, mainStyle: {
-        backgroundColor: '#404040',
+        backgroundColor: '#2967fd',
         height: 100,
         borderRadius: 5,
         marginHorizontal: 15,

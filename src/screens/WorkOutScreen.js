@@ -3,6 +3,13 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl, Image } from "react
 
 const WorkOutScreen = ({ navigation }) => {
     let groups = navigation.getParam('groups').split("/");
+    let equipment = navigation.getParam('equipment');
+    const [refreshKey] = useState(0);
+    const [imageUrls, setImageUrls] = useState([]);
+
+
+
+
     if (groups[0].toLowerCase() === 'rest') {
         return (
             <View>
@@ -16,21 +23,26 @@ const WorkOutScreen = ({ navigation }) => {
             </View>)
     }
 
-    const [refreshKey] = useState(0);
-    const [imageUrls, setImageUrls] = useState([]);
+
 
     const fetchImages = async () => {
         try {
-            const newImageUrls = await Promise.all(
-                groups.map(async (group) => {
-                    const response = await fetch(`http://192.168.0.56:8888/randomImage?category=Barbell&muscle=${group}&timestamp=${Date.now()}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
 
-                    return response.url;
-                })
-            );
+            const newImageUrls = [];
+            for (const group of groups) {
+                let response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
+                if (response.status === 500){
+                    for(let i = 0; i < equipment.length; i++){
+                        response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[i]}&muscle=${group}&timestamp=${Date.now()}`);
+                        if (response.status === 200){
+                            break;
+                        }
+                    }
+                }
+
+
+                newImageUrls.push(response.url);
+            }
 
             setImageUrls(newImageUrls);
         } catch (error) {
@@ -38,8 +50,10 @@ const WorkOutScreen = ({ navigation }) => {
         }
     };
 
+
     const createViews = () => {
         return groups.map((group, index) => (
+
             <View style={styles.viewBlock} key={index}>
                 <View>
                     <Text style={styles.textStyle}>{group}</Text>
@@ -48,14 +62,13 @@ const WorkOutScreen = ({ navigation }) => {
                     <Image
                         key={index}
                         source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
-                        style={{ width: 200, height: 200 }}
+                        style={{ width: '98%', height: '100%' }}
                     />
                 </View>
             </View>
         ));
     };
 
-    console.log(navigation.getParam('equipment'))
     const pullMe = async () => {
         await fetchImages();
     };

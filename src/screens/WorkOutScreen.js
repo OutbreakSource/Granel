@@ -27,7 +27,6 @@ const WorkOutScreen = ({ navigation }) => {
 
     const fetchImages = async () => {
         try {
-
             const newImageUrls = [];
             for (const group of groups) {
                 let response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
@@ -39,11 +38,8 @@ const WorkOutScreen = ({ navigation }) => {
                         }
                     }
                 }
-
-
                 newImageUrls.push(response.url);
             }
-
             setImageUrls(newImageUrls);
         } catch (error) {
             console.error('Error fetching images:', error);
@@ -53,7 +49,6 @@ const WorkOutScreen = ({ navigation }) => {
 
     const createViews = () => {
         return groups.map((group, index) => (
-
             <View style={styles.viewBlock} key={index}>
                 <View>
                     <Text style={styles.textStyle}>{group}</Text>
@@ -62,7 +57,7 @@ const WorkOutScreen = ({ navigation }) => {
                     <Image
                         key={index}
                         source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
-                        style={{ width: '98%', height: '100%' }}
+                        style={{ width: '100%', height: '100%', borderRadius: 25, resizeMode: "contain"}}
                     />
                 </View>
             </View>
@@ -95,22 +90,25 @@ const WorkOutScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     textStyle: {
+        fontFamily: 'Verdana',
         fontSize: 50,
-        textDecorationStyle: "solid",
+        textDecorationStyle: "double",
         alignSelf: "center",
-        marginVertical: 10,
+        textTransform: "uppercase",
+        fontWeight: 'bold'
     },
     viewBlock: {
-        backgroundColor: '#568ee1',
-        borderRadius: 5,
+        backgroundColor: '#de2525',
+        borderRadius: 15,
         marginVertical: 15,
-        padding: 10,
+        padding: 25,
     },
     imageContainer: {
         alignSelf: 'center',
-        marginTop: 10,
+        //marginTop: 10,
+        borderRadius: 100,
         width: '100%',
-        height: 200,
+        height: 250,
         justifyContent: 'center',
         alignItems: 'center',
     },

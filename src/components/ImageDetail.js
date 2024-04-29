@@ -10,15 +10,11 @@ const ImageDetail = (props) => {
         </View>
     );
 }
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
+Dimensions.get('window').width;
+Dimensions.get('window').height;
 const styles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
-        width: windowWidth * .80,
-        height: windowHeight * .80,
         justifyContent: 'center',
         alignSelf: 'center',
     },

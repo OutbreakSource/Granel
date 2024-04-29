@@ -57,7 +57,7 @@ const WorkOutScreen = ({ navigation }) => {
                     <Image
                         key={index}
                         source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
-                        style={{ width: '98%', height: '100%', borderRadius: 10}}
+                        style={{ width: '100%', height: '100%', borderRadius: 25, resizeMode: "contain"}}
                     />
                 </View>
             </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         //marginTop: 10,
         borderRadius: 100,
         width: '100%',
-        height: 200,
+        height: 250,
         justifyContent: 'center',
         alignItems: 'center',
     },

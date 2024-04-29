@@ -5,8 +5,6 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from "react-native-vector-icons/MaterialIcons"
 
 
-
-
 const MainScreen = ({navigation}) => {
 
     let myDate = new Date();
@@ -58,8 +56,7 @@ const MainScreen = ({navigation}) => {
 
 
     return (
-        <View>
-
+        <View style={{backgroundColor: '#ffffff'}}>
             <ScrollView>
                 <SectionedMultiSelect
                     IconRenderer={Icon}

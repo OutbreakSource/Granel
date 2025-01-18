@@ -1,5 +1,6 @@
-import {ScrollView, View, Text, Image, StyleSheet, Dimensions} from "react-native";
+import {ScrollView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
 import React from "react";
+import {RadioButtonCheckedOutlined} from "@mui/icons-material";
 
 const SelectionScreen = ({navigation}) => {
     let routines = [["Rest",
@@ -66,10 +67,15 @@ const SelectionScreen = ({navigation}) => {
 
     const createViews = () => {
         return routines.map((routine, routineIndex) => (
-            <View style={styles.viewBlock} key={routineIndex}>
+
+            <View styles={{spacing: 50}} key={routineIndex}>
+                <View style={styles.viewBlock} key={routineIndex}>
+                    <TouchableOpacity>
+                    </TouchableOpacity>
                     {
                         routine.map((plan, planIndex) => (
                             <View key={planIndex}>
+
                                 <Text style={styles.textStyleDay}>
                                     {getDay(planIndex)}.
                                 </Text>
@@ -79,14 +85,26 @@ const SelectionScreen = ({navigation}) => {
                             </View>
                         ))
                     }
-            </View>
+                </View>
 
+            <TouchableOpacity key={"test"}>
+                <View style={styles.viewBlockSelect}>
+                        <Text style={styles.textStyleDay}>
+                            SELECT PLAN
+                        </Text>
+                </View>
+            </TouchableOpacity>
+
+    </View>
         ));
+
     };
 
     return (
         <ScrollView horizontal
-                    pagingEnabled>
+                    pagingEnabled
+                    contentContainerStyle={styles.scrollViewContainer}
+                    showsHorizontalScrollIndicator={false}>
             {createViews()}
         </ScrollView>
     )
@@ -102,6 +120,7 @@ const styles = StyleSheet.create({
         textDecorationStyle: "double",
         alignSelf: "center",
         textTransform: "uppercase",
+        position: 'relative',
         lineHeight: 30
     },
     textStyleDay: {
@@ -116,20 +135,33 @@ const styles = StyleSheet.create({
 
     },
     viewBlock: {
-        backgroundColor: '#4fbded',
+        backgroundColor: '#84afff',
         borderRadius: 40,
         width: width,
         height: height * 0.750,
         paddingTop: height * 0.02,
         resizeMode: "contain",
+        marginBottom: 20,
+        paddingHorizontal: 10,
 
     },
 
-    slider: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+    viewBlockSelect: {
+        backgroundColor: '#de2525',
+        width: width * .7,
+        height: height * 0.10,
+        alignSelf: "center",
+        justifyContent: "center",
+        textTransform: "uppercase",
+        paddingHorizontal: 50,
+        borderRadius: 100
+    },
+
+    scrollViewContainer: {
+    },
+    scrollViewChild: {
+        width: width, // Add spacing between pages; adjust dimension
+    },
 });
 
 

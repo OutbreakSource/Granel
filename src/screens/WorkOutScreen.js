@@ -11,7 +11,6 @@ const WorkOutScreen = ({ route, navigation }) => {
     //let groups = navigation.getParam('groups').split("/");
     //let equipment = navigation.getParam('equipment');
     //let groups = navigation.navigate('Work', { paramName: "groups"})
-    //let equipment = navigation.navigate('Home', { paramName: "equipment"})
 
 
     const [refreshKey] = useState(0);
@@ -82,16 +81,18 @@ const WorkOutScreen = ({ route, navigation }) => {
     const pullMe = async () => {
         await fetchImages();
     };
-    console.log(loading)
 
     useEffect(  () => {
         fetchImages();
     }, []);
 
-    console.log(loading)
     return (
         <View>
-            {loading ? (<ActivityIndicator size="large" color="#de2525" />)
+            {loading ? (
+                <View style={{paddingTop: 15}}>
+                    <ActivityIndicator size="large" color="#de2525" />
+                </View>
+                )
             :
                 <ScrollView
                         key={refreshKey}

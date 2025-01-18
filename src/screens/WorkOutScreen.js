@@ -11,7 +11,7 @@ const WorkOutScreen = ({ route, navigation }) => {
 
     const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
-    const scrollRef = useRef(null);
+    const scrollRef = useRef();
     const [savedXPosition, setSavedXPosition] = useState(null);
 
 
@@ -77,21 +77,22 @@ const WorkOutScreen = ({ route, navigation }) => {
         ));
     };
 
+    const getSavedPosition = async () => {
+        try {
+            const value = await AsyncStorage.getItem('SCROLL_X_POSITION');
+            setSavedXPosition(value)
+            if (savedXPosition !== null) {
+                console.log(savedXPosition);
+                scrollRef.current.scrollTo({x: savedXPosition, animated: true});
+            }
+        } catch (error) {
+            console.error('Error getting scroll position:', error);
+        }
+    };
+
     const pullMe = async () => {
         await fetchImages();
-        const getSavedPosition = async () => {
-            try {
-                const value = await AsyncStorage.getItem('SCROLL_X_POSITION');
-                console.log(value/width);
-                if (value !== null) {
-                    setSavedXPosition(parseInt((value/width), 10));
-                }
-            } catch (error) {
-                console.error('Error getting scroll position:', error);
-            }
-        };
-
-        await getSavedPosition();
+        getSavedPosition()
     };
 
 
@@ -99,19 +100,18 @@ const WorkOutScreen = ({ route, navigation }) => {
 
     useEffect(  () => {
         fetchImages();
-
     }, []);
 
 
     const handleScroll = async (event) => {
         const positionX = event.nativeEvent.contentOffset.x;
-        console.log(positionX / width);
         try {
             await AsyncStorage.setItem('SCROLL_X_POSITION', (positionX/width).toString());
         } catch (error) {
             console.error('Error saving scroll position:', error);
         }
     };
+
 
     return (
         <View>

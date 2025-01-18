@@ -63,23 +63,22 @@ const SelectionScreen = ({navigation}) => {
         }
     }
 
+
     const createViews = () => {
         return routines.map((routine, routineIndex) => (
             <View style={styles.viewBlock} key={routineIndex}>
-                <View>
                     {
                         routine.map((plan, planIndex) => (
-                            <View>
-                                <Text>
+                            <View key={planIndex}>
+                                <Text style={styles.textStyleDay}>
                                     {getDay(planIndex)}.
                                 </Text>
-                                <Text style={styles.textStyle} key={planIndex}>
-                                    {plan}
+                                <Text style={styles.textStyle}>
+                                    {plan.replaceAll("/", " | ")}
                                 </Text>
                             </View>
                         ))
                     }
-                </View>
             </View>
 
         ));
@@ -99,19 +98,30 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     textStyle: {
         fontFamily: 'Verdana',
-        fontSize: 20,
+        fontSize: 18,
         textDecorationStyle: "double",
         alignSelf: "center",
         textTransform: "uppercase",
         lineHeight: 30
     },
+    textStyleDay: {
+        fontFamily: 'Verdana',
+        fontSize: 26,
+        textDecorationStyle: "double",
+        alignSelf: "center",
+        textTransform: "uppercase",
+        fontWeight: 'bold',
+        lineHeight: 26,
+        position: 'relative',
+
+    },
     viewBlock: {
         backgroundColor: '#4fbded',
         borderRadius: 40,
-        justifyContent: 'space-between',
         width: width,
-        height: height * 0.80,
-        paddingTop: height * 0.05,
+        height: height * 0.750,
+        paddingTop: height * 0.02,
+        resizeMode: "contain",
 
     },
 

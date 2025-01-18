@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, ScrollView} from "react-native";
-import CurrentBodyGroup from "../components/CurrentBodyGroups";
+import {View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity} from "react-native";
+import CurrentBodyGroup from "../components/CurrentBodyGroup";
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from "react-native-vector-icons/MaterialIcons"
 import EquipmentSelect from "../components/EquipmentSelect";
 
 
 const MainScreen = ({navigation}) => {
+
+    const { width, height } = Dimensions.get('window');
+
 
     let myDate = new Date();
     let dayCurr = myDate.getDay()
@@ -48,7 +51,11 @@ const MainScreen = ({navigation}) => {
                     selectedItems={selectedItems}
                     setSelectedItems={setSelectedItems}/>
 
-                <View style={{paddingTop: 25}}>
+                <TouchableOpacity style={styles.backgroundStyle} onPress={() => navigation.navigate("SELECT", {groups: ["Rest", "Rest", "Rest", "Rest", "Rest", "Rest"], equipment: selectedItems})}>
+
+                </TouchableOpacity>
+
+                <View style={{paddingTop: width * 0.05, paddingBottom: width * 0.15}}>
                     <CurrentBodyGroup theme={styles.mainStyle} currentDay={myDate.getDay()}
                                       navigation={navigation} equipment={selectedItems} id={0}/>
                     <CurrentBodyGroup theme={styles.backgroundStyle} currentDay={myDate.getDay()}

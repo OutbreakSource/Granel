@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from "react-native";
 import CurrentBodyGroup from "../components/CurrentBodyGroups";
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from "react-native-vector-icons/MaterialIcons"
+import EquipmentSelect from "../components/EquipmentSelect";
 
 
 const MainScreen = ({navigation}) => {
@@ -33,95 +34,20 @@ const MainScreen = ({navigation}) => {
         stringDay = "Saturday"
     }
 
-    const [selectedItems, setSelectedItems] = useState(["Barbell", "Body Only", "Cable", "Dumbbell", "Kettlebells", "Machine"]);
-
-    const items = [
-        {
-            name: 'Equipment',
-            id: 0,
-            children: [
-                { id: 'Barbell', name: 'Barbell' },
-                { id: 'Body Only', name: 'Body Only' },
-                { id: 'Cable', name: 'Cable' },
-                { id: 'Dumbbell', name: 'Dumbbell' },
-                { id: 'Kettlebells', name: 'Kettlebells' },
-                { id: 'Machine', name: 'Machine' }
-            ],
-        },
-    ];
-
-    const onSelectedItemsChange = (selectedItems) => {
-        setSelectedItems(selectedItems);
-    };
 
 
+
+    const [selectedItems, setSelectedItems] =
+        useState(["Barbell", "Body Only", "Cable", "Dumbbell", "Kettlebells", "Machine"]);
 
     return (
         <View style={{backgroundColor: '#ffffff'}}>
             <ScrollView>
-                <SectionedMultiSelect
-                    IconRenderer={Icon}
-                    items={items}
-                    uniqueKey="id"
-                    subKey="children"
-                    selectText="Equipment"
-                    onSelectedItemsChange={onSelectedItemsChange}
+                <EquipmentSelect
+                    navigation={navigation}
                     selectedItems={selectedItems}
-                    hideSearch={true}
-                    expandDropDowns={true}
-                    styles={{
+                    setSelectedItems={setSelectedItems}/>
 
-                        container: {
-                            flex: 1,
-                            padding: 8,
-                            maxHeight: 500,
-                            marginTop:'50%'
-                        },
-                        item: {
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#80bcff',
-                            padding: 8
-                        },
-                        subItem: {
-                            backgroundColor: '#e3e3e3',
-                            paddingVertical: 10,
-                            paddingHorizontal: 20,
-                            padding: 8
-                        },
-                        selectedItem: {
-                            backgroundColor: '#568ee1',
-                            color: '000000'
-                        },
-                        subItemText: {
-                            color: '#000000',
-                            fontSize: 30,
-                        },
-                        separator: {
-                            height: 1,
-                            backgroundColor: '#00e4ff',
-                        },
-                        selectToggle: {
-                            padding: 8,
-                        },
-                        button: {
-                            backgroundColor: '#568ee1',
-                        },
-                        confirmText: {
-                            color: 'black',
-                            padding: 8
-                        },
-                        scrollView: {
-                            maxHeight: 600
-                        },
-                        selectToggleText: {
-                            fontSize: 30,
-                            flex: 1,
-                            justifyContent: "center"
-                        },
-
-                    }}
-
-                />
                 <View style={{paddingTop: 25}}>
                     <CurrentBodyGroup theme={styles.mainStyle} currentDay={myDate.getDay()}
                                       navigation={navigation} equipment={selectedItems} id={0}/>

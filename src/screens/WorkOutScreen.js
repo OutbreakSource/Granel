@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, RefreshControl, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, RefreshControl, Image, ActivityIndicator } from "react-native";
 
 const WorkOutScreen = ({ route, navigation }) => {
     const { groups = '', equipment = '' } = route.params || {};
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    console.log("Groups:", groups);
-    console.log("Equipment:", equipment);
+    //console.log("Groups:", groups);
+    //console.log("Equipment:", equipment);
     //let groups = navigation.getParam('groups').split("/");
     //let equipment = navigation.getParam('equipment');
     //let groups = navigation.navigate('Work', { paramName: "groups"})
@@ -34,10 +36,10 @@ const WorkOutScreen = ({ route, navigation }) => {
 
 
     const fetchImages = async () => {
+        setLoading(true)
         try {
             const newImageUrls = [];
             for (const group of groups) {
-                console.log(`https://192.168.0.14:3000/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
 
                 let response = await fetch(`http://192.168.0.14:3000/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
 
@@ -49,10 +51,11 @@ const WorkOutScreen = ({ route, navigation }) => {
                         }
                     }
                 }
-                console.log("here__________")
                 newImageUrls.push(response.url);
             }
             setImageUrls(newImageUrls);
+            setLoading(false)
+
         } catch (error) {
             console.error('Error fetching images:', error);
         }
@@ -79,24 +82,29 @@ const WorkOutScreen = ({ route, navigation }) => {
     const pullMe = async () => {
         await fetchImages();
     };
+    console.log(loading)
 
-    useEffect(() => {
+    useEffect(  () => {
         fetchImages();
     }, []);
 
+    console.log(loading)
     return (
-        <ScrollView
-            key={refreshKey}
-            refreshControl={
-                <RefreshControl
-                    refreshing={false}
-                    onRefresh={pullMe}
-                />
-            }>
-            <View>
-                {createViews()}
-            </View>
-        </ScrollView>
+        <View>
+            {loading ? (<ActivityIndicator size="large" color="#de2525" />)
+            :
+                <ScrollView
+                        key={refreshKey}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={false}
+                                onRefresh={pullMe}
+                            />
+                        }>
+                            {createViews()}
+                    </ScrollView>}
+        </View>
+
     );
 }
 

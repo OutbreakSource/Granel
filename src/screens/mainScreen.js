@@ -54,7 +54,6 @@ const MainScreen = ({navigation}) => {
         setSelectedItems(selectedItems);
     };
 
-    console.log(navigation)
 
 
     return (

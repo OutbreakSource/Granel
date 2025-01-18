@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, Image } from "react-native";
 
-const WorkOutScreen = ({ navigation }) => {
-    let groups = navigation.getParam('groups').split("/");
-    let equipment = navigation.getParam('equipment');
+const WorkOutScreen = ({ route, navigation }) => {
+    const { groups = '', equipment = '' } = route.params || {};
+
+    console.log("Groups:", groups);
+    console.log("Equipment:", equipment);
+    //let groups = navigation.getParam('groups').split("/");
+    //let equipment = navigation.getParam('equipment');
+    //let groups = navigation.navigate('Work', { paramName: "groups"})
+    //let equipment = navigation.navigate('Home', { paramName: "equipment"})
+
+
     const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
 
@@ -29,15 +37,19 @@ const WorkOutScreen = ({ navigation }) => {
         try {
             const newImageUrls = [];
             for (const group of groups) {
-                let response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
+                console.log(`https://192.168.0.14:3000/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
+
+                let response = await fetch(`http://192.168.0.14:3000/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
+
                 if (response.status === 500){
                     for(let i = 0; i < equipment.length; i++){
-                        response = await fetch(`http://192.168.0.56:8888/randomImage?category=${equipment[i]}&muscle=${group}&timestamp=${Date.now()}`);
+                        response = await fetch(`http://192.168.0.14:3000/randomImage?category=${equipment[i]}&muscle=${group}&timestamp=${Date.now()}`);
                         if (response.status === 200){
                             break;
                         }
                     }
                 }
+                console.log("here__________")
                 newImageUrls.push(response.url);
             }
             setImageUrls(newImageUrls);

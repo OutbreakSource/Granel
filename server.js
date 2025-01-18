@@ -3,8 +3,8 @@ const app = express()
 const path = require('path')
 const fs = require('fs/promises')
 
-const PORT = 8888;
-app.listen(PORT, "192.168.0.56")
+const PORT = 3000;
+app.listen(PORT, `192.168.0.14`)
 
 //app.use('/images', express.static(path.join(__dirname, 'pics')))
 app.get('/randomImage', async (req, res) => {
@@ -17,7 +17,9 @@ app.get('/randomImage', async (req, res) => {
 
     try {
         const imagesDirectory = path.join(__dirname, 'pics', category, muscle);
+        console.log(imagesDirectory);
         //C:/Users/danie/WebstormProjects/Granel/pics/Barbell/Glutes/
+
         const files = await fs.readdir(imagesDirectory);
 
         let currentImage;
@@ -42,7 +44,7 @@ app.get('/randomImage', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://192.168.0.56:8888/randomImage`)
+    console.log(`Server running on ${PORT}`);
 })
 
 

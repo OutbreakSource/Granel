@@ -54,6 +54,8 @@ const MainScreen = ({navigation}) => {
         setSelectedItems(selectedItems);
     };
 
+    console.log(navigation)
+
 
     return (
         <View style={{backgroundColor: '#ffffff'}}>
@@ -121,7 +123,6 @@ const MainScreen = ({navigation}) => {
                     }}
 
                 />
-
                 <View style={{paddingTop: 25}}>
                     <CurrentBodyGroup theme={styles.mainStyle} currentDay={myDate.getDay()}
                                       navigation={navigation} equipment={selectedItems} id={0}/>

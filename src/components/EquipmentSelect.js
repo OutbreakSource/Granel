@@ -2,7 +2,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import React from "react";
 
-const EquipmentSelect = ({navigation, setSelectedItems, selectedItems}) => {
+const EquipmentSelect = ({setSelectedItems, selectedItems}) => {
 
     const items = [
         {

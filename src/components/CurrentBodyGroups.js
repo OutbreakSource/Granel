@@ -42,13 +42,15 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
         "Rest"
     ]]
 
+    //console.log(routines[id][currentDay])
+    //console.log(equipment)
 
     return (
 
             <View>
                 <Text style={styles.planText}>Plan #{id + 1}:</Text>
                 <TouchableOpacity style={theme} onPress={() =>
-                    navigation.navigate("Work", {groups: routines[id][currentDay], equipment: equipment})}>
+                    navigation.navigate("Work", {groups: routines[id][currentDay].split("/"), equipment: equipment})}>
                     <Text style={styles.textStyle}>{routines[id][currentDay]}</Text>
                 </TouchableOpacity>
             </View>

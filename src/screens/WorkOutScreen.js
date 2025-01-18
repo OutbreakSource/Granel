@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView, RefreshControl, Image, ActivityIndicator } from "react-native";
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, Dimensions, StyleSheet, ScrollView, RefreshControl,
+    Image, ActivityIndicator } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WorkOutScreen = ({ route, navigation }) => {
     const { groups = '', equipment = '' } = route.params || {};
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    //console.log("Groups:", groups);
-    //console.log("Equipment:", equipment);
-    //let groups = navigation.getParam('groups').split("/");
-    //let equipment = navigation.getParam('equipment');
-    //let groups = navigation.navigate('Work', { paramName: "groups"})
 
 
     const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
+    const scrollRef = useRef(null);
+    const [savedXPosition, setSavedXPosition] = useState(null);
+
 
 
 
@@ -80,11 +79,39 @@ const WorkOutScreen = ({ route, navigation }) => {
 
     const pullMe = async () => {
         await fetchImages();
+        const getSavedPosition = async () => {
+            try {
+                const value = await AsyncStorage.getItem('SCROLL_X_POSITION');
+                console.log(value/width);
+                if (value !== null) {
+                    setSavedXPosition(parseInt((value/width), 10));
+                }
+            } catch (error) {
+                console.error('Error getting scroll position:', error);
+            }
+        };
+
+        await getSavedPosition();
     };
+
+
+
 
     useEffect(  () => {
         fetchImages();
+
     }, []);
+
+
+    const handleScroll = async (event) => {
+        const positionX = event.nativeEvent.contentOffset.x;
+        console.log(positionX / width);
+        try {
+            await AsyncStorage.setItem('SCROLL_X_POSITION', (positionX/width).toString());
+        } catch (error) {
+            console.error('Error saving scroll position:', error);
+        }
+    };
 
     return (
         <View>
@@ -104,7 +131,11 @@ const WorkOutScreen = ({ route, navigation }) => {
                         }>
                     <ScrollView horizontal
                                 pagingEnabled
-                                showsHorizontalScrollIndicator={false}>
+                                showsHorizontalScrollIndicator={false}
+                                onMomentumScrollEnd={handleScroll}
+                                ref={scrollRef}
+                                >
+
                         {createViews()}
                     </ScrollView>
                     </ScrollView>}

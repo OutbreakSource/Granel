@@ -1,5 +1,6 @@
 import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
 import React from "react";
+import {CommonActions} from "@react-navigation/native";
 
 const SelectionScreen = ({navigation}) => {
     let routines = [["Rest",
@@ -79,9 +80,18 @@ const SelectionScreen = ({navigation}) => {
 
                 <TouchableOpacity
                     onPress={() =>
-                        navigation.navigate("GRANEL", { selectedRoutineIndex: routineIndex })
-                    }
-                >
+                    {
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [
+                                    {
+                                        name: 'GRANEL',
+                                        params: { selectedRoutineIndex: routineIndex },
+                                    }
+                                ],
+                            })
+                        )}}>
                     <View style={styles.viewBlockSelect}>
                         <Text style={styles.textStyleDay}>SELECT PLAN</Text>
                     </View>

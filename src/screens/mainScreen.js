@@ -29,7 +29,10 @@ const MainScreen = ({ navigation, route }) => {
                 <TouchableOpacity
                     style={styles.backgroundStyle}
                     onPress={() => navigation.navigate("SELECT")}
-                />
+                >
+                    <Text style={styles.textStyle}>SELECT</Text>
+                </TouchableOpacity>
+
 
                 <View style={{ paddingTop: width * 0.05, paddingBottom: width * 0.15 }}>
                     <CurrentBodyGroup

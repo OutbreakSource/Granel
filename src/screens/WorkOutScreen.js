@@ -1,20 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView, RefreshControl,
-    Image, ActivityIndicator } from "react-native";
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Dimensions, Image, RefreshControl, ScrollView, StyleSheet, Text, View} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const WorkOutScreen = ({ route, navigation }) => {
-    const { groups = '', equipment = '' } = route.params || {};
+const WorkOutScreen = ({route, navigation}) => {
+    const {groups = '', equipment = ''} = route.params || {};
     const [loading, setLoading] = useState(true);
-
 
 
     const [refreshKey] = useState(0);
     const [imageUrls, setImageUrls] = useState([]);
     const scrollRef = useRef();
     const [savedXPosition, setSavedXPosition] = useState(null);
-
-
 
 
     if (groups[0].toLowerCase() === 'rest') {
@@ -31,7 +27,6 @@ const WorkOutScreen = ({ route, navigation }) => {
     }
 
 
-
     const fetchImages = async () => {
         setLoading(true)
         try {
@@ -40,10 +35,10 @@ const WorkOutScreen = ({ route, navigation }) => {
 
                 let response = await fetch(`http://192.168.0.14:3000/randomImage?category=${equipment[Math.floor(Math.random() * equipment.length)]}&muscle=${group}&timestamp=${Date.now()}`);
 
-                if (response.status === 500){
-                    for(let i = 0; i < equipment.length; i++){
+                if (response.status === 500) {
+                    for (let i = 0; i < equipment.length; i++) {
                         response = await fetch(`http://192.168.0.14:3000/randomImage?category=${equipment[i]}&muscle=${group}&timestamp=${Date.now()}`);
-                        if (response.status === 200){
+                        if (response.status === 200) {
                             break;
                         }
                     }
@@ -61,18 +56,18 @@ const WorkOutScreen = ({ route, navigation }) => {
 
     const createViews = () => {
         return groups.map((group, index) => (
-                <View style={styles.viewBlock} key={index}>
-                    <View>
-                        <Text style={styles.textStyle}>{group}</Text>
-                    </View>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            key={index}
-                            source={{ uri: `${imageUrls[index]}&timestamp=${Date.now()}` }}
-                            style={{ width: '100%', height: '100%', borderRadius: 25, resizeMode: "contain"}}
-                        />
-                    </View>
+            <View style={styles.viewBlock} key={index}>
+                <View>
+                    <Text style={styles.textStyle}>{group}</Text>
                 </View>
+                <View style={styles.imageContainer}>
+                    <Image
+                        key={index}
+                        source={{uri: `${imageUrls[index]}&timestamp=${Date.now()}`}}
+                        style={{width: '100%', height: '100%', borderRadius: 25, resizeMode: "contain"}}
+                    />
+                </View>
+            </View>
 
         ));
     };
@@ -96,9 +91,7 @@ const WorkOutScreen = ({ route, navigation }) => {
     };
 
 
-
-
-    useEffect(  () => {
+    useEffect(() => {
         fetchImages();
     }, []);
 
@@ -106,7 +99,7 @@ const WorkOutScreen = ({ route, navigation }) => {
     const handleScroll = async (event) => {
         const positionX = event.nativeEvent.contentOffset.x;
         try {
-            await AsyncStorage.setItem('SCROLL_X_POSITION', (positionX/width).toString());
+            await AsyncStorage.setItem('SCROLL_X_POSITION', (positionX / width).toString());
         } catch (error) {
             console.error('Error saving scroll position:', error);
         }
@@ -114,36 +107,36 @@ const WorkOutScreen = ({ route, navigation }) => {
 
 
     return (
-        <View>
+        <View backgroundColor="#8E1616" style={{flex: 1}}>
             {loading ? (
-                <View style={{paddingTop: 15}}>
-                    <ActivityIndicator size="large" color="#de2525" />
-                </View>
+                    <View style={{paddingTop: 15}}>
+                        <ActivityIndicator size="large" color="#de2525"/>
+                    </View>
                 )
-            :
+                :
                 <ScrollView
-                        key={refreshKey}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={false}
-                                onRefresh={pullMe}
-                            />
-                        }>
+                    key={refreshKey}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={false}
+                            onRefresh={pullMe}
+                        />
+                    }>
                     <ScrollView horizontal
                                 pagingEnabled
                                 showsHorizontalScrollIndicator={false}
                                 onMomentumScrollEnd={handleScroll}
                                 ref={scrollRef}
-                                >
+                    >
 
                         {createViews()}
                     </ScrollView>
-                    </ScrollView>}
+                </ScrollView>}
         </View>
 
     );
 }
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     textStyle: {
@@ -155,7 +148,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     viewBlock: {
-        backgroundColor: '#de2525',
+        backgroundColor: '#D84040',
         borderRadius: 15,
         justifyContent: 'space-between',
         width: width,

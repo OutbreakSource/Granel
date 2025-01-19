@@ -11,7 +11,7 @@ app.get('/randomImage', async (req, res) => {
 
     const {category, muscle} = req.query;
 
-    if (!category || !muscle){
+    if (!category || !muscle) {
         return res.status(400).json({error: "Missing params for category or muscle"});
     }
 
@@ -31,7 +31,7 @@ app.get('/randomImage', async (req, res) => {
             } else {
                 return res.status(404).json({error: "Image not found"})
             }
-        } else{
+        } else {
             const randomIndex = Math.floor(Math.random() * files.length);
             currentImage = files[randomIndex];
         }
@@ -39,7 +39,7 @@ app.get('/randomImage', async (req, res) => {
         res.sendFile(path.join(imagesDirectory, currentImage));
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error : "Internal Server Error"});
+        res.status(500).json({error: "Internal Server Error"});
     }
 });
 

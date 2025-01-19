@@ -1,4 +1,4 @@
-import {ScrollView, View, Text, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
+import {Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {CommonActions} from "@react-navigation/native";
 
@@ -10,28 +10,28 @@ const SelectionScreen = ({navigation}) => {
         "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
         "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
         "Your Choice"
-    ],["Rest",
+    ], ["Rest",
         "Quadriceps/Glutes/Abdominals",
         "Lats/Chest",
         "Calves/Glutes/Hamstrings/Quadriceps/Core",
         "Lower back/Middle back/Triceps",
         "Shoulders",
         "Chest/Biceps/Abdominals"
-    ],["Calves/Glutes/Hamstrings/Quadriceps",
+    ], ["Calves/Glutes/Hamstrings/Quadriceps",
         "Chest",
         "Biceps",
         "Legs",
         "Triceps",
         "Shoulders",
         "Lower back/Middle back"
-    ],["Rest",
+    ], ["Rest",
         "Chest",
         "Biceps/Triceps",
         "Legs",
         "Lower back/Middle back",
         "Shoulders",
         "Rest"
-    ],["Rest",
+    ], ["Rest",
         "Lower back/Middle back/Triceps",
         "Chest/Biceps/Abdominals",
         "Calves/Glutes/Hamstrings/Quadriceps/Shoulder",
@@ -42,25 +42,19 @@ const SelectionScreen = ({navigation}) => {
 
 
     function getDay(dayCurr) {
-        if (dayCurr === 0){
+        if (dayCurr === 0) {
             return "Sunday"
-        }
-        else if (dayCurr === 1){
+        } else if (dayCurr === 1) {
             return "Monday"
-        }
-        else if (dayCurr === 2){
+        } else if (dayCurr === 2) {
             return "Tuesday"
-        }
-        else if (dayCurr === 3){
+        } else if (dayCurr === 3) {
             return "Wednesday"
-        }
-        else if (dayCurr === 4){
+        } else if (dayCurr === 4) {
             return "Thursday"
-        }
-        else if (dayCurr === 5){
+        } else if (dayCurr === 5) {
             return "Friday"
-        }
-        else if (dayCurr === 6){
+        } else if (dayCurr === 6) {
             return "Saturday"
         }
     }
@@ -79,19 +73,19 @@ const SelectionScreen = ({navigation}) => {
                 </View>
 
                 <TouchableOpacity
-                    onPress={() =>
-                    {
+                    onPress={() => {
                         navigation.dispatch(
                             CommonActions.reset({
                                 index: 0,
                                 routes: [
                                     {
                                         name: 'GRANEL',
-                                        params: { selectedRoutineIndex: routineIndex },
+                                        params: {selectedRoutineIndex: routineIndex},
                                     }
                                 ],
                             })
-                        )}}>
+                        )
+                    }}>
                     <View style={styles.viewBlockSelect}>
                         <Text style={styles.textStyleDay}>SELECT PLAN</Text>
                     </View>
@@ -99,8 +93,6 @@ const SelectionScreen = ({navigation}) => {
             </View>
         ));
     };
-
-
 
 
     return (
@@ -115,7 +107,7 @@ const SelectionScreen = ({navigation}) => {
     );
 }
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     scrollViewContainer: {
@@ -160,8 +152,6 @@ const styles = StyleSheet.create({
         lineHeight: 26,
     },
 });
-
-
 
 
 export default SelectionScreen;

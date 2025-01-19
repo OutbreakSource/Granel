@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 
 const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
@@ -12,28 +11,28 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
         "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
         "Chest/Lats/Lower Back/Middle Back/Shoulders/Triceps/Biceps/Forearms/Calves/Glutes/Hamstrings/Quadriceps/Abdominals",
         "Your Choice"
-    ],["Rest",
+    ], ["Rest",
         "Quadriceps/Glutes/Abdominals",
         "Lats/Chest",
         "Calves/Glutes/Hamstrings/Quadriceps/Core",
         "Lower back/Middle back/Triceps",
         "Shoulders",
         "Chest/Biceps/Abdominals"
-    ],["Calves/Glutes/Hamstrings/Quadriceps",
+    ], ["Calves/Glutes/Hamstrings/Quadriceps",
         "Chest",
         "Biceps",
         "Legs",
         "Triceps",
         "Shoulders",
         "Lower back/Middle back"
-    ],["Rest",
+    ], ["Rest",
         "Chest",
         "Biceps/Triceps",
         "Legs",
         "Lower back/Middle back",
         "Shoulders",
         "Rest"
-    ],["Rest",
+    ], ["Rest",
         "Lower back/Middle back/Triceps",
         "Chest/Biceps/Abdominals",
         "Calves/Glutes/Hamstrings/Quadriceps/Shoulder",
@@ -44,13 +43,13 @@ const CurrentBodyGroup = ({navigation, id, theme, currentDay, equipment}) => {
 
 
     return (
-            <View>
-                <Text style={styles.planText}>Plan #{id + 1}:</Text>
-                <TouchableOpacity style={theme} onPress={() =>
-                    navigation.navigate("CONSTRIUR", {groups: routines[id][currentDay].split("/"), equipment: equipment})}>
-                    <Text style={styles.textStyle}>{routines[id][currentDay]}</Text>
-                </TouchableOpacity>
-            </View>
+        <View>
+            <Text style={styles.planText}>Current selected plan: #{id + 1}:</Text>
+            <TouchableOpacity style={theme} onPress={() =>
+                navigation.navigate("CONSTRIUR", {groups: routines[id][currentDay].split("/"), equipment: equipment})}>
+                <Text style={styles.textStyle}>{(routines[id][currentDay]).replaceAll("/", " | ")}</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
